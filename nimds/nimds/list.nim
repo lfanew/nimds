@@ -40,7 +40,7 @@ iterator nodePairs[T](list: LinkedList[T]): (int, Node[T]) =
     node = node.next
     inc index
 
-proc append[T](list: var LinkedList[T], val: T) =
+proc add[T](list: var LinkedList[T], val: T) =
   let node = initNode(val, nil)
   
   if list.len == 0:
@@ -51,6 +51,13 @@ proc append[T](list: var LinkedList[T], val: T) =
   list.tail = node
   inc list.len
 
+proc add[T](list: var LinkedList[T], index: int, val: T) =
+  for idx, item in list.nodePairs:
+    if idx == index - 1:
+      item.next = initNode(val, item.next)
+      inc list.len
+      break
+  
 proc remove[T](list: var LinkedList[T]): T =
   result = list.head.val
   list.head = list.head.next
@@ -71,11 +78,13 @@ proc pop[T](list: var LinkedList[T]): T =
 
 when isMainModule:
   var list = initLinkedList[string]()
-  list.append("hello")
-  list.append("there")
-  list.append("my")
-  list.append("dear")
-  list.append("friend")
+  list.add("hello")
+  list.add("there")
+  list.add("dear")
+  list.add("friend")
+  
+  list.add(2, "my")
+  
   echo "List length: ", list.len
   
   for idx, item in list.pairs:
@@ -92,11 +101,9 @@ when isMainModule:
   echo "List length: ", list.len
   for idx, item in list.pairs:
     echo idx, ": ", item
-  
+
   echo "Popped: ", list.pop()
 
   echo "List length: ", list.len
   for idx, item in list.pairs:
     echo idx, ": ", item
-  
-  
