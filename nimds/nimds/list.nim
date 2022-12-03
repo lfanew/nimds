@@ -59,7 +59,8 @@ proc add[T](list: var LinkedList[T], index: int, val: T) =
       break
 
 proc addFirst[T](list: var LinkedList[T], val: T) =
-  list.add(0, val)
+  list.head = initNode(val, list.head)
+  inc list.len
 
 proc addLast[T](list: var LinkedList[T], val: T) =
   list.add(val)
