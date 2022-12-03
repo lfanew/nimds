@@ -57,6 +57,12 @@ proc add[T](list: var LinkedList[T], index: int, val: T) =
       item.next = initNode(val, item.next)
       inc list.len
       break
+
+proc addFirst[T](list: var LinkedList[T], val: T) =
+  list.add(0, val)
+
+proc addLast[T](list: var LinkedList[T], val: T) =
+  list.add(val)
   
 proc remove[T](list: var LinkedList[T]): T =
   result = list.head.val
@@ -78,10 +84,11 @@ proc pop[T](list: var LinkedList[T]): T =
 
 when isMainModule:
   var list = initLinkedList[string]()
-  list.add("hello")
   list.add("there")
   list.add("dear")
-  list.add("friend")
+
+  list.addFirst("hello")
+  list.addLast("friend")
   
   list.add(2, "my")
   
