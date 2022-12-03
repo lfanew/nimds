@@ -52,6 +52,8 @@ proc add[T](list: var LinkedList[T], val: T) =
   inc list.len
 
 proc add[T](list: var LinkedList[T], index: int, val: T) =
+  if list.len == 0 or index >= list.len:
+    raise newException(IndexDefect, "Invalid index")
   for idx, item in list.nodePairs:
     if idx == index - 1:
       item.next = initNode(val, item.next)
@@ -59,7 +61,10 @@ proc add[T](list: var LinkedList[T], index: int, val: T) =
       break
 
 proc addFirst[T](list: var LinkedList[T], val: T) =
-  list.head = initNode(val, list.head)
+  let node = initNode(val, list.head)
+  list.head = node
+  if list.len == 0:
+    list.tail = node
   inc list.len
 
 proc addLast[T](list: var LinkedList[T], val: T) =
